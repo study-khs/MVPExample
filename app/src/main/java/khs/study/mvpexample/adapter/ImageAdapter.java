@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
@@ -16,31 +17,21 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khs.study.mvpexample.R;
+import khs.study.mvpexample.adapter.contract.ImageAdapterContract;
 import khs.study.mvpexample.data.ImageItem;
 
 /**
  * Created by jaeyoung on 2017. 3. 23..
  */
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> implements ImageAdapterContract.Model, ImageAdapterContract.View {
 
     private Context mContext;
-
+    private AdapterView.OnItemClickListener onItemClickListener;
     private ArrayList<ImageItem> mImageItems;
 
     public ImageAdapter(Context context) {
         mContext = context;
-    }
-
-    public void setImageItems(ArrayList<ImageItem> imageItems) {
-        mImageItems = imageItems;
-    }
-
-    public void clear() {
-        if (mImageItems != null) {
-            mImageItems.clear();
-            mImageItems = null;
-        }
     }
 
     @Override
@@ -98,6 +89,23 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+        }
+    }
+
+    @Override
+    public void notifyAdapter() {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void addItems(ArrayList<ImageItem> imageItems) {
+        this.mImageItems = imageItems;
+    }
+
+    @Override
+    public void clearItem() {
+        if (mImageItems != null) {
+            mImageItems.clear();
         }
     }
 }

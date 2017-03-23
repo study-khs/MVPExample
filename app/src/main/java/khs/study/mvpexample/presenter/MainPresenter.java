@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import khs.study.mvpexample.adapter.contract.ImageAdapterContract;
 import khs.study.mvpexample.data.ImageItem;
 import khs.study.mvpexample.data.SampleImageData;
 
@@ -16,6 +17,9 @@ public class MainPresenter implements MainContract.Presenter {
     private MainContract.View view;
 
     private SampleImageData sampleImageData;
+
+    private ImageAdapterContract.Model adapterModel;
+    private ImageAdapterContract.View adapterView;
 
     @Override
     public void attachView(MainContract.View view) {
@@ -35,7 +39,20 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void loadItems(Context context, boolean isClear) {
         ArrayList<ImageItem> items = sampleImageData.getImages(context, 10);
-        view.addItems(items, isClear);
-        view.notifyAdapter();
+        if (isClear) {
+            adapterModel.clearItem();
+        }
+        adapterModel.addItems(items);
+        adapterView.notifyAdapter();
+    }
+
+    @Override
+    public void setImageAdapterModel(ImageAdapterContract.Model adapterModel) {
+        this.adapterModel = adapterModel;
+    }
+
+    @Override
+    public void setImageAdapterView(ImageAdapterContract.View adapterView) {
+        this.adapterView = adapterView;
     }
 }

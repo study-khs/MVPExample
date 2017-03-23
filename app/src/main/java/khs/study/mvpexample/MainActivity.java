@@ -37,17 +37,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         ButterKnife.bind(this);
 
+        imageAdapter = new ImageAdapter(this);
+        recyclerView.setAdapter(imageAdapter);
+
         mainPresenter = new MainPresenter();
         mainPresenter.attachView(this);
+        mainPresenter.setImageAdapterModel(imageAdapter);
+        mainPresenter.setImageAdapterView(imageAdapter);
         mainPresenter.setSampleImageData(SampleImageData.getInstance());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        imageAdapter = new ImageAdapter(this);
-        recyclerView.setAdapter(imageAdapter);
 
         mainPresenter.loadItems(this, false);
 
@@ -91,16 +93,4 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void addItems(ArrayList<ImageItem> items, boolean isClear) {
-        if (isClear) {
-            imageAdapter.clear();
-        }
-        imageAdapter.setImageItems(items);
-    }
-
-    @Override
-    public void notifyAdapter() {
-        imageAdapter.notifyDataSetChanged();
-    }
 }
