@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -93,4 +94,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void showToast(String title) {
+        Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
+    }
 }

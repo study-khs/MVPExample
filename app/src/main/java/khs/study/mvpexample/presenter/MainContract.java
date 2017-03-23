@@ -15,7 +15,7 @@ import khs.study.mvpexample.data.SampleImageData;
 public interface MainContract {
 
     interface View {
-
+        void showToast(String title);
     }
 
     interface Presenter {
